@@ -1,0 +1,14 @@
+version: "3.7"
+services:
+  db:
+    build: development/db
+    ports:
+      - "15432:5432"
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=admin
+      - DB_APP_NAME=express_template
+      - DB_APP_USER=admin
+      - DB_APP_PASS=admin
+    volumes:
+      - "./development/data:/var/data/db"
