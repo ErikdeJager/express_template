@@ -1,51 +1,28 @@
 # Express Template
-A template for quickly setting up Express apps by Erik de Jager \
-[Erik's Github Profile](https://github.com/ErikdeJager)
+A template for quickly creating Express applications by Erik de Jager \
+[Visit Erik's Github Profile](https://github.com/ErikdeJager)
 
 ## Getting Started
 
-1. `npm install` - to install the dependencies
-2. `npm run db` - to run the postgresql dockerfile and migrate prisma with the database
-3. `npm run test` - to run tests (will automatically run `npm run build`)
-4. `npm run serve` - builds and starts the project (optionally you could run `npm run start` to only start the project without rebuilding )
+1. Run `npm install` to install the necessary dependencies.
+2. Run `npm run db` to set up the PostgreSQL database using Docker and migrate Prisma.
+3. Run `npm run test` to run tests (this will automatically run `npm run build`).
+4. Run `npm run serve` to build and start the project. You can also run `npm run start` to start the project without rebuilding.
 
 ## How it works
 
-* The server runs express in a nodejs environment. 
-`app.ts` has functions that can build the express app.
-In order to add functionality (for example routes or HTTP methods)
-you should edit the `app.ts/buildApp()` function.
-* `server.ts` takes care of actually launching the app.
-When you run commands such as `npm run serve` or `npm run start` the `server.ts` file gets executed
-This way the default implementation of the express template can be changes by injecting dependencies into the `buildApp()` function.
-* A recommended way to do this is by building an interface with a possible configuration and passing it as argument through the `buildApp()` function.
-* The test files (ending with .test.ts) don't use `server.ts`, instead they use the functions in
-`app.ts` to build their own version of the express app. 
-If a test file needs to start the express server for testing
-you need to use the `app.ts` functions to do so, you can use existing test files as examples (`app.test.ts`)
-* Its important that every test launches the server on a unique port.
-If some tests have the same port they may fail unexpectedly. \
-The way it is currently implemented is by having the first test file that
-requires server startup to launch on port 8081, all other tests are then
-incremented (8082, 8083, ...etc)
-* When launching the express server you can set a custom port 
-by passing a 4-digit number into the `launchApp()` function as argument.
-If no port was passed the server will launch on port 8080
-* Its also good to know that there is a workflow (`.github/workflows/main.yml`) for github
-configured to run with every push and pull_request. The workflow will:
-  * Checkout the code
-  * Start docker
-  * Migrate with prisma
-  * setup node
-  * install dependencies
-  * run all tests
-
+* The server runs Express in a Node.js environment. The `app.ts` file has functions that build the Express application. To add functionality (e.g., routes or HTTP methods), edit the `app.ts/buildApp()` function.
+* `server.ts` launches the app. When you run `npm run serve` or `npm run start`, the server.ts file is executed, allowing you to modify the default implementation of the Express template by injecting dependencies into the `buildApp()` function.
+  * An interface with a configurable argument can be created and passed to the `buildApp()` function to achieve this.
+* Test files (ending with .test.ts) do not use `server.ts`. Instead, they use the functions in `app.ts` to build their own version of the Express app. If a test file needs to start the Express server for testing, use the `app.ts` functions to do so. You can use existing test files (e.g., `app.test.ts`) as examples.
+* It's important to launch the server on a unique port for each test file. If multiple test files use the same port, they may fail unexpectedly. A recommended implementation assigns the first test file that requires server startup to port 8081, with subsequent tests incrementing the port number (8082, 8083, etc.).
+* You can set a custom port when launching the Express server by passing a 4-digit number to the `launchApp()` function as an argument. If no port is specified, the server will run on port 8080.
 
 ## Dependencies
 
-The technologies used in this template are
+The following technologies are used in this template:
 
-* NodeJS
+* Node.js
 * Typescript
 * Express
 * Jest
@@ -61,34 +38,32 @@ Recommended dependencies for extension:
 
 ## Next steps
 
-This project template will launch as it is currently configured 
-though you may want to change some variables to mach your project name
+This project template can be used as is, but you may want to make some modifications to match your project requirements. Some changes you may consider making include:
 
-Things you may want to change:
-* package.json:
-  * name \
-  The name of the project is currently set to `express_template`
-  * version \
-  The version of the project is currently set to `1.0.0`
-  * description \
-  Discribtion currently says `Template to quickly get started with an express app`
-  * dependencies \
-  Every dependency is currently set to `dependencies`, there are no `devDependencies`
-* docker-compose.yml (postgresql database):
-  * Database name: \
-  The database name is currently set to `express_template`
-  * Database password: \
-  The database username and password are currently set to *user:`admin` pass:`admin`* 
-  >Make sure that if you change these settings you also change the .env variable, this is where prisma gets its db connection from
-* schema.prisma :
-  * Models \
-  There is currently a single model called `Example`. You can remove the `Example` model add your own models here
-  >The test `connects to the database` in `prisma.test.ts` is dependent on the `Example` model.
-  >Make sure to set a new model inside this test if you were to delete the `Example` model otherwise the test will fail.
-  >Any other model will do.
-* app.ts:
-  * The function `buildApp()` currently doesn't take any arguments. 
-  But you can set up this function to take (optional) arguments.
-  This way you can change the app's implementation with dependency injection. \
-  Don't use the `buildApp()` function to set the port for the express app. 
-  This can already be done by passing an argument to the `launchApp()` function
+1. Updating the project name:
+   * In `package.json`, change the name from `express_template` to match your project name.
+   * In `docker-compose.yml`, change the database name from `express_template` to match your project name.
+2. Updating the project version:
+   * In `package.json`, change the version number from `1.0.0` to match your desired version. 
+   * Please note that the version number has to be 3 digits, otherwise Prisma will fail to migrate.
+3. Updating the project description:
+   * In `package.json`, change the description to provide a more accurate summary of your project.
+4. Updating the dependencies:
+   * In `package.json`, change the dependencies section to match the technologies you want to use in your project.
+5. Configuring the database:
+   * In `docker-compose.yml`, update the database username and password to match your desired settings.
+   * In `.env`, update the database connection settings to match the changes you made in `docker-compose.yml`. (or connect to another database of your choosing)
+6. Modifying the schema:
+   * In `schema.prisma`, change the existing models or add your own models to match your project requirements. 
+   * In `prisma.test.ts`, update the test to reflect the changes you made to the models in `schema.prisma`, otherwise tests may fail.
+7. Customizing the Express app:
+   * In `app.ts`, edit the `buildApp()` function to add the desired functionality (routes, HTTP methods, etc.). 
+   * In `server.ts`, pass any necessary arguments to the `buildApp()` function to configure the Express app.
+
+Finally, it's important to note that there is a workflow (`.github/workflows/main.yml`) configured for Github to run tests with every push and pull request. The workflow will:
+* Check out the code
+* Starts Docker (Postgresql)
+* Migrates with Prisma
+* Sets up Node.js
+* Installs dependencies
+* Runs all tests
