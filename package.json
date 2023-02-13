@@ -4,7 +4,7 @@
   "description": "Template to quickly get started with an express app",
   "main": "server.js",
   "scripts": {
-    "db": "docker-compose -f \"docker-compose.yml\" up -d --build && npx prisma migrate dev --name init",
+    "docker": "docker-compose -f \"docker-compose.yml\" up -d --build",
     "build": "rimraf dist && tsc --project tsconfig.build.json",
     "start": "node dist/server.js",
     "test": "npm run build && jest",
