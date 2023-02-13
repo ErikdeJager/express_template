@@ -5,9 +5,8 @@ A template for quickly creating Express applications by Erik de Jager \
 ## Getting Started
 
 1. Run `npm install` to install the necessary dependencies.
-2. Run `npm run db` to set up the PostgreSQL database using Docker and migrate Prisma.
-3. Run `npm run test` to run tests (this will automatically run `npm run build`).
-4. Run `npm run serve` to build and start the project. You can also run `npm run start` to start the project without rebuilding.
+2. Run `npm run test` to run tests (this will automatically run `npm run build`).
+3. Run `npm run serve` to build and start the project. You can also run `npm run start` to start the project without rebuilding.
 
 ## How it works
 
@@ -29,7 +28,6 @@ The following technologies are used in this template:
 * Supertest
 * Dotenv
 * Rimraf
-* Prisma
 * Babel
 
 Recommended dependencies for extension:
@@ -45,7 +43,6 @@ This project template can be used as is, but you may want to make some modificat
    * In `docker-compose.yml`, change the database name from `express_template` to match your project name.
 2. Updating the project version:
    * In `package.json`, change the version number from `1.0.0` to match your desired version. 
-   * Please note that the version number has to be 3 digits, otherwise Prisma will fail to migrate.
 3. Updating the project description:
    * In `package.json`, change the description to provide a more accurate summary of your project.
 4. Updating the dependencies:
@@ -53,17 +50,12 @@ This project template can be used as is, but you may want to make some modificat
 5. Configuring the database:
    * In `docker-compose.yml`, update the database username and password to match your desired settings.
    * In `.env`, update the database connection settings to match the changes you made in `docker-compose.yml`. (or connect to another database of your choosing)
-6. Modifying the schema:
-   * In `schema.prisma`, change the existing models or add your own models to match your project requirements. 
-   * In `prisma.test.ts`, update the test to reflect the changes you made to the models in `schema.prisma`, otherwise tests may fail.
-7. Customizing the Express app:
+6. Customizing the Express app:
    * In `app.ts`, edit the `buildApp()` function to add the desired functionality (routes, HTTP methods, etc.). 
    * In `server.ts`, pass any necessary arguments to the `buildApp()` function to configure the Express app.
 
 Finally, it's important to note that there is a workflow (`.github/workflows/main.yml`) configured for Github to run tests with every push and pull request. The workflow will:
 * Check out the code
-* Starts Docker (Postgresql)
-* Migrates with Prisma
 * Sets up Node.js
 * Installs dependencies
 * Runs all tests
