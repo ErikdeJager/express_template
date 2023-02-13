@@ -7,6 +7,7 @@ A template for quickly creating Express applications by Erik de Jager \
 1. Run `npm install` to install the necessary dependencies.
 2. Run `npm run test` to run tests (this will automatically run `npm run build`).
 3. Run `npm run serve` to build and start the project. You can also run `npm run start` to start the project without rebuilding.
+4. Run `npm run docker` to start a local postgresql database
 
 ## How it works
 
@@ -29,8 +30,10 @@ The following technologies are used in this template:
 * Dotenv
 * Rimraf
 * Babel
+* Docker (postgresql)
 
 Recommended dependencies for extension:
+* TypeORM or Prisma: For making object relational mappings (just like in hibernate from Spring Boot)
 * jsonwebtoken: For creating JWT tokens (Authentication)
 * Bcrypt: For hashing passwords and other sensitive information
 
